@@ -316,8 +316,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 6
-  jumpPower: 5.2
-  jumpDelay: 1.15
+  jumpPower: 5.5
+  jumpDelay: 1
+  fallMultiplier: 1.1
 --- !u!23 &771770212
 MeshRenderer:
   m_ObjectHideFlags: 0

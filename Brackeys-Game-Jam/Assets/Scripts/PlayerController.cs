@@ -6,21 +6,27 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class PlayerController : MonoBehaviour
 {
-    // Fluid move/jump pair is 6/5.2
+    // Fluid move/jump pair is 6/5.5
     [Range(4f, 10f)]
     public float movespeed;
     [Range(1f, 10f)]
     public float jumpPower;
     [Range(0f, 2f)]
-    public float jumpDelay; // Optimal value is around 1.15
+    public float jumpDelay; // Optimal value is around 1
+    [Range(1f, 3f)]
+    public float fallMultiplier;
 
     private bool isGrounded;
     private bool canJump;
     private float distToGround;
+    private Rigidbody rb;
+    private BoxCollider col;
 
     void Start ()
     {
-        distToGround = this.gameObject.GetComponent<Collider>().bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
+        rb = this.gameObject.GetComponent<Rigidbody>();
+        col = this.gameObject.GetComponent<BoxCollider>();
+        distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
         canJump = true;
 
 		if (movespeed == 0f)
@@ -48,6 +54,11 @@ public class PlayerController : MonoBehaviour
             this.transform.Translate(movement);
         }
 
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * fallMultiplier * Time.fixedDeltaTime * Physics.gravity.y;
+        }
+
         Jump(movement);
     }
 
@@ -60,7 +71,7 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 jumpDir;
                 jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
-                this.gameObject.GetComponent<Rigidbody>().AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
+                rb.AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
                 isGrounded = false;
                 canJump = false;
                 Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam
@@ -71,14 +82,14 @@ public class PlayerController : MonoBehaviour
     void CheckGrounded()
     {
         Vector3 pos = this.transform.position;
-        float offset = this.gameObject.GetComponent<BoxCollider>().size.x / 2.0f;
+        float offset = col.size.x / 2.0f;
         Ray r1 = new Ray(pos + new Vector3(offset, 0, 0), Vector3.down);
         Ray r2 = new Ray(pos + new Vector3(-offset, 0, 0), Vector3.down);
 
         isGrounded = (Physics.Raycast(r1, distToGround) || Physics.Raycast(r2, distToGround));  // Cast ray downwards to check if we are on the ground
         if (isGrounded == true)
         {
-            this.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;  // Zero out the velocity. This solves some jumping bugs 
+            rb.velocity = Vector3.zero;  // Zero out the velocity. This solves some jumping bugs 
         }
     }
 
