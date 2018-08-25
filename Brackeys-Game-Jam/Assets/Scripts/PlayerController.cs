@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
     void HandleMovement()
     {
         float x = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(-x * movespeed * Time.deltaTime, 0, 0);
+        Vector3 movement = new Vector3(x * movespeed * Time.deltaTime, 0, 0);
         
         CheckGrounded();
 
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             if (isGrounded)
             {
                 Vector3 jumpDir;
-                jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
+                jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x < 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
                 this.gameObject.GetComponent<Rigidbody>().AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
                 isGrounded = false;
             }
