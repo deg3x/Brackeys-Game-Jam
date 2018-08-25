@@ -76,7 +76,6 @@ public class PlayerController : MonoBehaviour
             {
                 rb.velocity += force;
             }
-           // rb.AddForce(Vector3.right * movement.x * midAirMovespeed);
         }
 
         if (rb.velocity.y < 0)
@@ -96,7 +95,6 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 jumpDir;
                 jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
-                //rb.AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
                 rb.velocity = (jumpDir + Vector3.up) * jumpPower;
                 isGrounded = false;
                 canJump = false;
