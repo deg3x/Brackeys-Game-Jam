@@ -319,6 +319,7 @@ MonoBehaviour:
   jumpPower: 5.5
   jumpDelay: 1
   fallMultiplier: 1.1
+  midAirMovespeed: 100
 --- !u!23 &771770212
 MeshRenderer:
   m_ObjectHideFlags: 0

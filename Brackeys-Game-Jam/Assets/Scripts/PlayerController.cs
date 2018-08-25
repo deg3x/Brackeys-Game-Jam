@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     public float jumpDelay; // Optimal value is around 1
     [Range(1f, 3f)]
     public float fallMultiplier;
+    [Range(50f, 300f)]
+    public float midAirMovespeed;
 
     private bool isGrounded;
     private bool canJump;
@@ -52,6 +54,10 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             this.transform.Translate(movement);
+        }
+        else
+        {
+            rb.AddForce(Vector3.right * movement.x * midAirMovespeed);
         }
 
         if (rb.velocity.y < 0)
