@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool canJump;
     private float distToGround;
+    private float midAirLimit;
     private Rigidbody rb;
     private BoxCollider col;
 
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
         col = this.gameObject.GetComponent<BoxCollider>();
         distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
         canJump = true;
+        midAirLimit = jumpPower;
 
 		if (movespeed == 0f)
         {
@@ -57,7 +59,24 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.AddForce(Vector3.right * movement.x * midAirMovespeed);
+            Vector3 force = Vector3.right * movement.x * midAirMovespeed;
+            if (Mathf.Abs(force.x + rb.velocity.x) > Mathf.Abs(midAirLimit))
+            {
+                if( movement.x < 0 && midAirLimit > 0)
+                {
+                    midAirLimit = -midAirLimit;
+                }
+                else if(movement.x > 0 && midAirLimit < 0)
+                {
+                    midAirLimit = -midAirLimit;
+                }
+                rb.velocity = new Vector3(midAirLimit, rb.velocity.y, rb.velocity.z);
+            }
+            else
+            {
+                rb.velocity += force;
+            }
+           // rb.AddForce(Vector3.right * movement.x * midAirMovespeed);
         }
 
         if (rb.velocity.y < 0)
@@ -77,7 +96,8 @@ public class PlayerController : MonoBehaviour
             {
                 Vector3 jumpDir;
                 jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
-                rb.AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
+                //rb.AddForce((jumpDir + Vector3.up) * jumpPower, ForceMode.Impulse);
+                rb.velocity = (jumpDir + Vector3.up) * jumpPower;
                 isGrounded = false;
                 canJump = false;
                 Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam

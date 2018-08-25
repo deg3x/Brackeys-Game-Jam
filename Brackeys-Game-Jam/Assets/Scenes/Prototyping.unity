@@ -318,7 +318,7 @@ MonoBehaviour:
   movespeed: 6
   jumpPower: 5.5
   jumpDelay: 1
-  fallMultiplier: 1.1
+  fallMultiplier: 1.15
   midAirMovespeed: 100
 --- !u!23 &771770212
 MeshRenderer:
@@ -388,7 +388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 88
+  m_Constraints: 120
   m_CollisionDetection: 0
 --- !u!65 &771770216
 BoxCollider:
