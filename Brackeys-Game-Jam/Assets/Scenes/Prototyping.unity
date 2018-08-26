@@ -138,7 +138,7 @@ BoxCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 551746203}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 389f75bf3134107449c190ae929b8985, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 771770214}
   - component: {fileID: 771770213}
   - component: {fileID: 771770212}
-  - component: {fileID: 771770216}
+  - component: {fileID: 771770211}
   - component: {fileID: 771770210}
   - component: {fileID: 771770215}
   m_Layer: 0
@@ -316,10 +316,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movespeed: 6
-  jumpPower: 5.5
+  jumpPower: 6
   jumpDelay: 1
   fallMultiplier: 1.15
-  midAirMovespeed: 100
+  midAirMovespeed: 5
+--- !u!136 &771770211
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 771770209}
+  m_Material: {fileID: 13400000, guid: edeee78294de5d24ea68f2bd890b3d5d, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &771770212
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -390,18 +403,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
---- !u!65 &771770216
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 771770209}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1542319426
 GameObject:
   m_ObjectHideFlags: 0

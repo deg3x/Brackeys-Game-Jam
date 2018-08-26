@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     public float jumpDelay; // Optimal value is around 1
     [Range(1f, 3f)]
     public float fallMultiplier;
-    [Range(50f, 300f)]
+    [Range(0f, 50f)]
     public float midAirMovespeed;
 
     private bool isGrounded;
@@ -23,12 +23,12 @@ public class PlayerController : MonoBehaviour
     private float distToGround;
     private float midAirLimit;
     private Rigidbody rb;
-    private BoxCollider col;
+    private CapsuleCollider col;
 
     void Start ()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
-        col = this.gameObject.GetComponent<BoxCollider>();
+        col = this.gameObject.GetComponent<CapsuleCollider>();
         distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
         canJump = true;
         midAirLimit = jumpPower;
@@ -106,14 +106,15 @@ public class PlayerController : MonoBehaviour
     void CheckGrounded()
     {
         Vector3 pos = this.transform.position;
-        float offset = col.size.x / 2.0f;
+        //float offset = col.size.x / 2.0f;
+        float offset = col.radius;
         Ray r1 = new Ray(pos + new Vector3(offset, 0, 0), Vector3.down);
         Ray r2 = new Ray(pos + new Vector3(-offset, 0, 0), Vector3.down);
 
         isGrounded = (Physics.Raycast(r1, distToGround) || Physics.Raycast(r2, distToGround));  // Cast ray downwards to check if we are on the ground
         if (isGrounded == true)
         {
-            rb.velocity = Vector3.zero;  // Zero out the velocity. This solves some jumping bugs 
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0);  // Zero out the velocity. This solves some jumping bugs 
         }
     }
 
