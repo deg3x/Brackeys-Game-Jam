@@ -122,4 +122,20 @@ public class PlayerController : MonoBehaviour
     {
         canJump = true;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            this.transform.SetParent(collision.transform);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Platform"))
+        {
+            this.transform.SetParent(null);
+        }
+    }
 }
