@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
@@ -15,8 +16,15 @@ public class PlayerController : MonoBehaviour
     public float jumpDelay; // Optimal value is around 1
     [Range(1f, 3f)]
     public float fallMultiplier;
-    [Range(0f, 50f)]
+    [Range(10f, 300f)]
     public float midAirMovespeed;
+    [Range(10f, 100f)]
+    public float ascendSpeed;
+    [Range(1f, 20f)]
+    public float maxAscendSpeed;
+    [Range(1f, 3f)]
+    public float fallAscendFactor;
+    public Text ascendText;
 
     private bool isGrounded;
     private bool canJump;
@@ -24,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private float midAirLimit;
     private Rigidbody rb;
     private CapsuleCollider col;
+    private bool canAscend;
 
     void Start ()
     {
@@ -32,6 +41,7 @@ public class PlayerController : MonoBehaviour
         distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
         canJump = true;
         midAirLimit = jumpPower;
+        canAscend = false;
 
 		if (movespeed == 0f)
         {
@@ -59,7 +69,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            Vector3 force = Vector3.right * movement.x * midAirMovespeed;
+            Vector3 force = Vector3.right * movement.x * midAirMovespeed * Time.fixedDeltaTime;
             if (Mathf.Abs(force.x + rb.velocity.x) > Mathf.Abs(midAirLimit))
             {
                 if( movement.x < 0 && midAirLimit > 0)
@@ -88,17 +98,37 @@ public class PlayerController : MonoBehaviour
 
     void Jump(Vector3 move)
     {
-        if(Input.GetAxisRaw("Jump") != 0f)
+        if (!canAscend) // Regular jump case
         {
-            CheckGrounded();
-            if (isGrounded && canJump)
+            if (Input.GetAxisRaw("Jump") != 0f)
             {
-                Vector3 jumpDir;
-                jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
-                rb.velocity = (jumpDir + Vector3.up) * jumpPower;
-                isGrounded = false;
-                canJump = false;
-                Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam
+                CheckGrounded();
+                if (isGrounded && canJump)
+                {
+                    Vector3 jumpDir;
+                    jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
+                    rb.velocity = (jumpDir + Vector3.up) * jumpPower;
+                    isGrounded = false;
+                    canJump = false;
+                    Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam
+                }
+            }
+        }
+        else    // Ascension jump case
+        {
+            if (Input.GetAxisRaw("Jump") != 0f)
+            {
+                if ((rb.velocity.y + (ascendSpeed * Time.fixedDeltaTime)) < maxAscendSpeed)
+                {
+                    if (rb.velocity.y < 0f) // If falling ascend faster
+                    {
+                        rb.velocity += new Vector3(0f, ascendSpeed * fallAscendFactor * Time.fixedDeltaTime, 0f);
+                    }
+                    else
+                    {
+                        rb.velocity += new Vector3(0f, ascendSpeed * Time.fixedDeltaTime, 0f);
+                    }
+                }
             }
         }
     }
@@ -136,6 +166,24 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Platform"))
         {
             this.transform.SetParent(null);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Ascension"))
+        {
+            ascendText.enabled = true;
+            canAscend = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ascension"))
+        {
+            ascendText.enabled = false;
+            canAscend = false;
         }
     }
 }
