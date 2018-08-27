@@ -34,11 +34,16 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider col;
     private bool canAscend;
 
+    private Vector3 movement;
+    private bool isJumping;
+    private bool jumpEnabled;
+
     void Start ()
     {
         rb = this.gameObject.GetComponent<Rigidbody>();
         col = this.gameObject.GetComponent<CapsuleCollider>();
         distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
+        CheckGrounded();
         canJump = true;
         midAirLimit = jumpPower;
         canAscend = false;
@@ -47,20 +52,36 @@ public class PlayerController : MonoBehaviour
         {
             movespeed = 10f;
         }
-        
-        CheckGrounded();
 	}
-	
-	void FixedUpdate () // Player uses RigidBody so movement in FixedUpdate to be in sync with physics
+
+    private void Update()
+    {
+        HandleInput();
+    }
+
+    void FixedUpdate () // Player uses RigidBody so movement in FixedUpdate to be in sync with physics
     {
         HandleMovement();
     }
 
-    void HandleMovement()
+    void HandleInput()
     {
         float x = Input.GetAxis("Horizontal");
-        Vector3 movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
-        
+        movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
+
+        if (Input.GetAxisRaw("Jump") != 0f)
+        {
+            isJumping = true;
+        }
+        else
+        {
+            isJumping = false;
+            jumpEnabled = false;
+        }
+    }
+
+    void HandleMovement()
+    {
         CheckGrounded();
 
         if (isGrounded)
@@ -93,30 +114,31 @@ public class PlayerController : MonoBehaviour
             rb.velocity += Vector3.up * fallMultiplier * Time.fixedDeltaTime * Physics.gravity.y;
         }
 
-        Jump(movement);
+        Jump();
     }
 
-    void Jump(Vector3 move)
+    void Jump()
     {
         if (!canAscend) // Regular jump case
         {
-            if (Input.GetAxisRaw("Jump") != 0f)
+            if (isJumping && !jumpEnabled)
             {
                 CheckGrounded();
                 if (isGrounded && canJump)
                 {
                     Vector3 jumpDir;
-                    jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
+                    jumpDir = (movement == Vector3.zero) ? Vector3.zero : ((movement.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
                     rb.velocity = (jumpDir + Vector3.up) * jumpPower;
                     isGrounded = false;
                     canJump = false;
                     Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam
+                    jumpEnabled = true;
                 }
             }
         }
         else    // Ascension jump case
         {
-            if (Input.GetAxisRaw("Jump") != 0f)
+            if (isJumping)
             {
                 if ((rb.velocity.y + (ascendSpeed * Time.fixedDeltaTime)) < maxAscendSpeed)
                 {
@@ -129,6 +151,12 @@ public class PlayerController : MonoBehaviour
                         rb.velocity += new Vector3(0f, ascendSpeed * Time.fixedDeltaTime, 0f);
                     }
                 }
+                else
+                {
+                    rb.velocity = new Vector3(0f, maxAscendSpeed, 0f);
+                }
+
+                jumpEnabled = true;
             }
         }
     }
@@ -136,7 +164,6 @@ public class PlayerController : MonoBehaviour
     void CheckGrounded()
     {
         Vector3 pos = this.transform.position;
-        //float offset = col.size.x / 2.0f;
         float offset = col.radius;
         Ray r1 = new Ray(pos + new Vector3(offset, 0, 0), Vector3.down);
         Ray r2 = new Ray(pos + new Vector3(-offset, 0, 0), Vector3.down);
