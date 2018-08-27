@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public float maxAscendSpeed;
     [Range(1f, 3f)]
     public float fallAscendFactor;
-    public Text ascendText;
+    public GameObject ascendText;
 
     private bool isGrounded;
     private bool canJump;
@@ -33,7 +33,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private CapsuleCollider col;
     private bool canAscend;
+    private Transform oldParent;
 
+    // Input variables
     private Vector3 movement;
     private bool isJumping;
     private bool jumpEnabled;
@@ -184,6 +186,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
+            oldParent = this.transform.parent;
             this.transform.SetParent(collision.transform);
         }
     }
@@ -192,7 +195,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Platform"))
         {
-            this.transform.SetParent(null);
+            this.transform.SetParent(oldParent);
+            oldParent = null;
         }
     }
 
@@ -200,7 +204,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Ascension"))
         {
-            ascendText.enabled = true;
+            ascendText.SetActive(true);
             canAscend = true;
         }
     }
@@ -209,7 +213,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("Ascension"))
         {
-            ascendText.enabled = false;
+            ascendText.SetActive(false);
             canAscend = false;
         }
     }

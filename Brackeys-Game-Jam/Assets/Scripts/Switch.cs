@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Switch : MonoBehaviour
 {
     public GameObject platform;
-    public Text interactText;
+    public GameObject interactText;
 
     private ElevatorPlatform script;
     private bool axisInUse;
@@ -18,7 +18,7 @@ public class Switch : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        interactText.enabled = true;
+        interactText.SetActive(true);
     }
 
     private void OnTriggerStay(Collider other)
@@ -35,7 +35,7 @@ public class Switch : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        interactText.enabled = false;
+        interactText.SetActive(false);
     }
 
     private void Update()
