@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4011481738606890}
   - component: {fileID: 33049405162890344}
   - component: {fileID: 23694245795713702}
-  - component: {fileID: 65126624399206240}
   m_Layer: 0
   m_Name: SmallRock_03
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910488580705062}
   m_Mesh: {fileID: 4300014, guid: ce42c68e892a95a4ca41c98456793001, type: 3}
---- !u!65 &65126624399206240
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1910488580705062}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01620773, y: 0.026542807, z: 0.031781625}
-  m_Center: {x: 0.0055346196, y: -0.00009200493, z: 0.00020137495}

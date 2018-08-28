@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4210028460977058}
   - component: {fileID: 33191713169576082}
   - component: {fileID: 23936629430319638}
-  - component: {fileID: 65930483401438510}
   m_Layer: 0
   m_Name: MediumRock_03
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1175262469109700}
   m_Mesh: {fileID: 4300002, guid: ce42c68e892a95a4ca41c98456793001, type: 3}
---- !u!65 &65930483401438510
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1175262469109700}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.010728339, y: 0.01501891, z: 0.0078800265}
-  m_Center: {x: -0.00022845645, y: -0.0012710075, z: 0.0010851582}

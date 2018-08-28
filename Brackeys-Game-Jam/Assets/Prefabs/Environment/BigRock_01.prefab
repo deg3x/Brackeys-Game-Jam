@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4499832516428872}
   - component: {fileID: 33262106341917088}
   - component: {fileID: 23665030961391520}
-  - component: {fileID: 65467864999987632}
   m_Layer: 0
   m_Name: BigRock_01
   m_TagString: Untagged
@@ -84,15 +83,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1598785029377590}
   m_Mesh: {fileID: 4300008, guid: ce42c68e892a95a4ca41c98456793001, type: 3}
---- !u!65 &65467864999987632
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598785029377590}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.02797069, y: 0.031254333, z: 0.019602835}
-  m_Center: {x: -0.0015200642, y: 0.00034827966, z: 0.00066944805}
