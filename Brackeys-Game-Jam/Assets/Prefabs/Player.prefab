@@ -249,7 +249,7 @@ MonoBehaviour:
   jumpPower: 6.5
   jumpDelay: 1
   fallMultiplier: 1.2
-  midAirMovespeed: 180
+  midAirMovespeed: 250
   ascendSpeed: 15
   maxAscendSpeed: 12
   fallAscendFactor: 2
