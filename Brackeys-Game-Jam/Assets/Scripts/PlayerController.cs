@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    rb.velocity = new Vector3(0f, maxAscendSpeed, 0f);
+                    rb.velocity += new Vector3(0f, maxAscendSpeed - rb.velocity.y, 0f);
                 }
 
                 jumpEnabled = true;
@@ -206,6 +206,20 @@ public class PlayerController : MonoBehaviour
         {
             ascendText.SetActive(true);
             canAscend = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.transform.GetChild(0).transform.position.y > this.transform.position.y)
+        {
+            ascendText.SetActive(true);
+            canAscend = true;
+        }
+        else
+        {
+            ascendText.SetActive(false);
+            canAscend = false;
         }
     }
 
