@@ -32,7 +32,15 @@ public class PlayerController : MonoBehaviour
     private float midAirLimit;
     private Rigidbody rb;
     private CapsuleCollider col;
-    private bool canAscend;
+    public bool canAscend;
+
+    public Animator animator;
+    public bool isFacingRight;
+    [Range(0f,1f)]
+    public float ascendHeight;
+    float minAscend = 1.5f;
+    float maxAscend = 15.6f;
+
 
     void Start ()
     {
@@ -60,12 +68,28 @@ public class PlayerController : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         Vector3 movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
-        
+
+        animator.SetFloat("(Horizontal) Speed", Mathf.Abs(x));
+
         CheckGrounded();
 
         if (isGrounded)
         {
             this.transform.Translate(movement);
+
+            if (animator.GetBool("isJumping"))
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start") || animator.GetCurrentAnimatorStateInfo(0).IsName("Jump Air"))
+                {
+                    animator.SetBool("isJumping", false);
+                }
+            }
+
+            if (animator.GetBool("isAscending"))
+            {
+                animator.SetBool("isAscending", false);
+                Debug.Log("isAscending false");
+            }
         }
         else
         {
@@ -105,6 +129,11 @@ public class PlayerController : MonoBehaviour
                 CheckGrounded();
                 if (isGrounded && canJump)
                 {
+                    if (!animator.GetBool("isJumping"))
+                    {
+                        animator.SetBool("isJumping", true);
+                    }
+
                     Vector3 jumpDir;
                     jumpDir = (move == Vector3.zero) ? Vector3.zero : ((move.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
                     rb.velocity = (jumpDir + Vector3.up) * jumpPower;
@@ -118,11 +147,29 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetAxisRaw("Jump") != 0f)
             {
+                if (!animator.GetBool("isAscending"))
+                {
+                    animator.SetBool("isAscending", true);
+                    Debug.Log("isAscending true");
+                }
+
+                if (animator.GetBool("isDescending"))
+                {
+                    animator.SetBool("isDescending", false);
+                    Debug.Log("isDescending false");
+                }
+
                 if ((rb.velocity.y + (ascendSpeed * Time.fixedDeltaTime)) < maxAscendSpeed)
                 {
                     if (rb.velocity.y < 0f) // If falling ascend faster
                     {
                         rb.velocity += new Vector3(0f, ascendSpeed * fallAscendFactor * Time.fixedDeltaTime, 0f);
+
+                        if (!animator.GetBool("isDescending"))
+                        {
+                            animator.SetBool("isDescending", true);
+                            Debug.Log("isDescending true");
+                        }
                     }
                     else
                     {
@@ -169,6 +216,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    float height;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Ascension"))
@@ -176,6 +225,11 @@ public class PlayerController : MonoBehaviour
             ascendText.enabled = true;
             canAscend = true;
         }
+        height = maxAscend - minAscend;
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        animator.SetFloat("Ascend Height", (transform.position.y - minAscend)/height);
     }
 
     private void OnTriggerExit(Collider other)
