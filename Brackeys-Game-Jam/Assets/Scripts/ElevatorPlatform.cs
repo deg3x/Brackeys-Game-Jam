@@ -6,7 +6,7 @@ public class ElevatorPlatform : MonoBehaviour
 {
     public GameObject start;
     public GameObject end;
-    [Range(0f, 0.1f)]
+    [Range(0.5f, 5f)]
     public float step;
     [Range(0f, 2f)]
     public float sleepTime;
@@ -33,22 +33,22 @@ public class ElevatorPlatform : MonoBehaviour
         }
 	}
 	
-	void FixedUpdate ()
+	void Update ()
     {
         if (activated)
         {
             if (up)
             {
-                this.transform.position = Vector3.MoveTowards(this.transform.position, endPos, step);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, endPos, step * Time.deltaTime);
             }
             else
             {
-                this.transform.position = Vector3.MoveTowards(this.transform.position, startPos, step);
+                this.transform.position = Vector3.MoveTowards(this.transform.position, startPos, step * Time.deltaTime);
             }
 
             if (this.transform.position == endPos)
             {
-                sleeping += Time.fixedDeltaTime;
+                sleeping += Time.deltaTime;
                 if (sleeping > sleepTime)
                 {
                     sleeping = 0f;
@@ -57,7 +57,7 @@ public class ElevatorPlatform : MonoBehaviour
             }
             else if (this.transform.position == startPos)
             {
-                sleeping += Time.fixedDeltaTime;
+                sleeping += Time.deltaTime;
                 if (sleeping > sleepTime)
                 {
                     sleeping = 0f;
