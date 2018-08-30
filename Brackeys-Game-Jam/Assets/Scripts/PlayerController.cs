@@ -26,9 +26,9 @@ public class PlayerController : MonoBehaviour
     [Range(1f, 3f)]
     public float fallAscendFactor;
     public GameObject ascendText;
-    [Range(0f, 0.3f)]
+    [Range(1f, 10f)]
     public float animSpeedFactor;
-    [Range(0f, 0.3f)]
+    [Range(1f, 10f)]
     public float ascSpeedFactor;
 
     private bool isGrounded;
@@ -47,9 +47,13 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     private float animSpeed;
     private float ascSpeed;
+    private float prevPos;
+    private float curPos;
 
     void Start ()
     {
+        prevPos = 0f;
+        curPos = 0f;
         anim = this.gameObject.GetComponent<Animator>();
         rb = this.gameObject.GetComponent<Rigidbody>();
         col = this.gameObject.GetComponent<CapsuleCollider>();
@@ -68,7 +72,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HandleInput();
-        Debug.Log(isGrounded);
     }
 
     void FixedUpdate () // Player uses RigidBody so movement in FixedUpdate to be in sync with physics
@@ -80,6 +83,17 @@ public class PlayerController : MonoBehaviour
     {
         float x = Input.GetAxisRaw("Horizontal"); 
         movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
+        prevPos = curPos;
+        curPos = movement.x;
+        
+        if (prevPos > curPos && curPos < 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0f, 270f, 0f);
+        }
+        else if(prevPos < curPos && curPos > 0)
+        {
+            this.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+        }
 
         if (Input.GetAxisRaw("Jump") != 0f)
         {
@@ -95,18 +109,18 @@ public class PlayerController : MonoBehaviour
     void HandleMovement()
     {
         CheckGrounded();
-
+        
         if (isGrounded)
         {
             if (movement == Vector3.zero)
             {
-                animSpeed = animSpeed - 2*animSpeedFactor < 0f ? 0f : animSpeed - 2*animSpeedFactor; ;
+                animSpeed = animSpeed - 2*animSpeedFactor * Time.fixedDeltaTime < 0f ? 0f : animSpeed - 2*animSpeedFactor * Time.fixedDeltaTime;
                 anim.SetFloat("(Horizontal) Speed", animSpeed);
             }
             else
             {
                 this.transform.Translate(movement, Space.World);
-                animSpeed = animSpeed + animSpeedFactor > 1f ? 1f : animSpeed + animSpeedFactor;
+                animSpeed = animSpeed + animSpeedFactor * Time.fixedDeltaTime > 1f ? 1f : animSpeed + animSpeedFactor * Time.fixedDeltaTime;
                 anim.SetFloat("(Horizontal) Speed", animSpeed);
             }
         }
@@ -176,11 +190,11 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("isAscending", true);
                     if (rb.velocity.y < 0)
                     {
-                        ascSpeed = ascSpeed - ascSpeedFactor > 0.5f ? ascSpeed - ascSpeedFactor : 0.5f;
+                        ascSpeed = ascSpeed - ascSpeedFactor * Time.fixedDeltaTime > 0.5f ? ascSpeed - ascSpeedFactor * Time.fixedDeltaTime : 0.5f;
                     }
                     else
                     {
-                        ascSpeed = ascSpeed + ascSpeedFactor > 1f ? 1f : ascSpeed + ascSpeedFactor;
+                        ascSpeed = ascSpeed + ascSpeedFactor * Time.fixedDeltaTime > 1f ? 1f : ascSpeed + ascSpeedFactor * Time.fixedDeltaTime;
                     }
                     anim.SetFloat("Ascend Height", ascSpeed);
                 }

@@ -21320,35 +21320,13 @@ Prefab:
       objectReference: {fileID: 959273104}
     - target: {fileID: 114191139402426454, guid: 052e71918edba4a40b8924a5f4b8eb76,
         type: 2}
-      propertyPath: jumpPower
-      value: 4.5
+      propertyPath: midAirMovespeed
+      value: 150
       objectReference: {fileID: 0}
-    - target: {fileID: 114191139402426454, guid: 052e71918edba4a40b8924a5f4b8eb76,
+    - target: {fileID: 54425796570871628, guid: 052e71918edba4a40b8924a5f4b8eb76,
         type: 2}
-      propertyPath: movespeed
-      value: 4.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4157059664591774, guid: 052e71918edba4a40b8924a5f4b8eb76, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 45.912334
-      objectReference: {fileID: 0}
-    - target: {fileID: 4157059664591774, guid: 052e71918edba4a40b8924a5f4b8eb76, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 10.468623
-      objectReference: {fileID: 0}
-    - target: {fileID: 4157059664591774, guid: 052e71918edba4a40b8924a5f4b8eb76, type: 2}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -29.12734
-      objectReference: {fileID: 0}
-    - target: {fileID: 114191139402426454, guid: 052e71918edba4a40b8924a5f4b8eb76,
-        type: 2}
-      propertyPath: animSpeedFactor
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114191139402426454, guid: 052e71918edba4a40b8924a5f4b8eb76,
-        type: 2}
-      propertyPath: ascSpeedFactor
-      value: 0.01
+      propertyPath: m_Constraints
+      value: 120
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 052e71918edba4a40b8924a5f4b8eb76, type: 2}

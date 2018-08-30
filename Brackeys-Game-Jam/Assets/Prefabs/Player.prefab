@@ -674,7 +674,7 @@ Transform:
   - {fileID: 4780601430813842}
   m_Father: {fileID: 4661588822178076}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 45.912334, y: 10.468623, z: -29.12734}
 --- !u!4 &4167839584261548
 Transform:
   m_ObjectHideFlags: 1
@@ -1241,8 +1241,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e36b472efcc2534ba94e85904f4a99f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movespeed: 6
-  jumpPower: 6.5
+  movespeed: 4.5
+  jumpPower: 4.5
   jumpDelay: 1
   fallMultiplier: 1.2
   midAirMovespeed: 250
@@ -1250,6 +1250,8 @@ MonoBehaviour:
   maxAscendSpeed: 12
   fallAscendFactor: 2
   ascendText: {fileID: 0}
+  animSpeedFactor: 3.5
+  ascSpeedFactor: 1
 --- !u!114 &114691595001520554
 MonoBehaviour:
   m_ObjectHideFlags: 1
