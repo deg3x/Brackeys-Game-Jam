@@ -26,6 +26,10 @@ public class PlayerController : MonoBehaviour
     [Range(1f, 3f)]
     public float fallAscendFactor;
     public GameObject ascendText;
+    [Range(0f, 0.3f)]
+    public float animSpeedFactor;
+    [Range(0f, 0.3f)]
+    public float ascSpeedFactor;
 
     private bool isGrounded;
     private bool canJump;
@@ -41,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private bool isJumping;
     private bool jumpEnabled;
     private Animator anim;
+    private float animSpeed;
+    private float ascSpeed;
 
     void Start ()
     {
@@ -62,6 +68,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         HandleInput();
+        Debug.Log(isGrounded);
     }
 
     void FixedUpdate () // Player uses RigidBody so movement in FixedUpdate to be in sync with physics
@@ -71,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        float x = Input.GetAxis("Horizontal"); 
+        float x = Input.GetAxisRaw("Horizontal"); 
         movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
 
         if (Input.GetAxisRaw("Jump") != 0f)
@@ -91,7 +98,17 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            this.transform.Translate(movement, Space.World);
+            if (movement == Vector3.zero)
+            {
+                animSpeed = animSpeed - 2*animSpeedFactor < 0f ? 0f : animSpeed - 2*animSpeedFactor; ;
+                anim.SetFloat("(Horizontal) Speed", animSpeed);
+            }
+            else
+            {
+                this.transform.Translate(movement, Space.World);
+                animSpeed = animSpeed + animSpeedFactor > 1f ? 1f : animSpeed + animSpeedFactor;
+                anim.SetFloat("(Horizontal) Speed", animSpeed);
+            }
         }
         else
         {
@@ -157,6 +174,15 @@ public class PlayerController : MonoBehaviour
                         rb.velocity += new Vector3(0f, ascendSpeed * Time.fixedDeltaTime, 0f);
                     }
                     anim.SetBool("isAscending", true);
+                    if (rb.velocity.y < 0)
+                    {
+                        ascSpeed = ascSpeed - ascSpeedFactor > 0.5f ? ascSpeed - ascSpeedFactor : 0.5f;
+                    }
+                    else
+                    {
+                        ascSpeed = ascSpeed + ascSpeedFactor > 1f ? 1f : ascSpeed + ascSpeedFactor;
+                    }
+                    anim.SetFloat("Ascend Height", ascSpeed);
                 }
                 else
                 {
@@ -179,6 +205,8 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isJumping", false);
             anim.SetBool("isAscending", false);
+            ascSpeed = 0f;
+            anim.SetFloat("Ascend Height", ascSpeed);
         }
         if (isGrounded == true)
         {

@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4982499814703988}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HeightStop (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   - component: {fileID: 4939732603325188}
   - component: {fileID: 108749594870455992}
   - component: {fileID: 65662404248004450}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spot Light_intense
   m_TagString: Ascension
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   - component: {fileID: 4626843227478874}
   - component: {fileID: 198923793408356308}
   - component: {fileID: 199980652194631412}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: FloatingDust_box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -70,7 +70,7 @@ GameObject:
   - component: {fileID: 4838125082536688}
   - component: {fileID: 198725804403565010}
   - component: {fileID: 199645032576938750}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LightTrail (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
