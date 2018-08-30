@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
 
     void HandleInput()
     {
-        float x = Input.GetAxis("Horizontal");
+        float x = Input.GetAxis("Horizontal"); 
         movement = new Vector3(x * movespeed * Time.fixedDeltaTime, 0, 0);
 
         if (Input.GetAxisRaw("Jump") != 0f)
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            this.transform.Translate(movement);
+            this.transform.Translate(movement, Space.World);
         }
         else
         {
