@@ -1,26 +1,16 @@
 fileFormatVersion: 2
-guid: e849f9209d7e1c2448c1dd29761dcb38
+guid: de71c528a1ed4424986719d42586cebb
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: Material.002
-    2100002: Material.001
+    2100000: Material.001
+    2100002: ElevButton
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Pickaxe
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 9e36f192e7b4cbc4e971d5880268b401, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: bbbd0cb089301254ba9c1cb6ea4b0393, type: 2}
+    4300000: ElevatorSwitch
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0

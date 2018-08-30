@@ -1,26 +1,70 @@
 fileFormatVersion: 2
-guid: e849f9209d7e1c2448c1dd29761dcb38
+guid: bd18c3ffd3f5c3e40bc05f8efca45969
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: Material.002
-    2100002: Material.001
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Pickaxe
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.001
-    second: {fileID: 2100000, guid: 9e36f192e7b4cbc4e971d5880268b401, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Material.002
-    second: {fileID: 2100000, guid: bbbd0cb089301254ba9c1cb6ea4b0393, type: 2}
+    100000: Lantern
+    100002: MushroomBig
+    100004: MushroomSmall
+    100006: //RootNode
+    100008: Torch
+    100010: WoodenBeam.000
+    100012: WoodenBeam.001
+    100014: WoodenBeam.002
+    100016: WoodenPlank.000
+    100018: WoodenPlank.001
+    100020: WoodenPlank.002
+    400000: Lantern
+    400002: MushroomBig
+    400004: MushroomSmall
+    400006: //RootNode
+    400008: Torch
+    400010: WoodenBeam.000
+    400012: WoodenBeam.001
+    400014: WoodenBeam.002
+    400016: WoodenPlank.000
+    400018: WoodenPlank.001
+    400020: WoodenPlank.002
+    2100000: Material.000
+    2100002: Material.002
+    2100004: Material.001
+    2100006: Material
+    2100008: Material.006
+    2100010: Material.003
+    2100012: Material.009
+    2100014: Material.010
+    2100016: Material.013
+    2300000: Lantern
+    2300002: MushroomBig
+    2300004: MushroomSmall
+    2300006: Torch
+    2300008: WoodenBeam.000
+    2300010: WoodenBeam.001
+    2300012: WoodenBeam.002
+    2300014: WoodenPlank.000
+    2300016: WoodenPlank.001
+    2300018: WoodenPlank.002
+    3300000: Lantern
+    3300002: MushroomBig
+    3300004: MushroomSmall
+    3300006: Torch
+    3300008: WoodenBeam.000
+    3300010: WoodenBeam.001
+    3300012: WoodenBeam.002
+    3300014: WoodenPlank.000
+    3300016: WoodenPlank.001
+    3300018: WoodenPlank.002
+    4300000: WoodenBeam.000
+    4300002: WoodenPlank.000
+    4300004: Torch
+    4300006: Lantern
+    4300008: MushroomSmall
+    4300010: MushroomBig
+    4300012: WoodenPlank.001
+    4300014: WoodenPlank.002
+    4300016: WoodenBeam.001
+    4300018: WoodenBeam.002
+  externalObjects: {}
   materials:
     importMaterials: 1
     materialName: 0

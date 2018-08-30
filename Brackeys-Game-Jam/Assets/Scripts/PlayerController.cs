@@ -214,14 +214,18 @@ public class PlayerController : MonoBehaviour
         float offset = col.radius;
         Ray r1 = new Ray(pos + new Vector3(offset, 0, 0), Vector3.down);
         Ray r2 = new Ray(pos + new Vector3(-offset, 0, 0), Vector3.down);
+        RaycastHit hit1 = new RaycastHit();
+        RaycastHit hit2 = new RaycastHit();
 
-        if (!isGrounded && (isGrounded = (Physics.Raycast(r1, distToGround) || Physics.Raycast(r2, distToGround))) == true)  // Cast ray downwards to check if we are on the ground
+        if (!isGrounded && (isGrounded = (Physics.Raycast(r1, out hit1, distToGround) || Physics.Raycast(r2, out hit2, distToGround))) == true)  // Cast ray downwards to check if we are on the ground
         {
             anim.SetBool("isJumping", false);
             anim.SetBool("isAscending", false);
             ascSpeed = 0f;
             anim.SetFloat("Ascend Height", ascSpeed);
         }
+        //if (isGrounded)
+            //Debug.Log(hit1);
         if (isGrounded == true)
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0);  // Zero out the velocity. This solves some jumping bugs 

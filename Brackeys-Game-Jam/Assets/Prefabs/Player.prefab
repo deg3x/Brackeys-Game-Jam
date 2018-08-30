@@ -738,7 +738,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1958077102557396}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 1.1, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
@@ -1224,7 +1224,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 99fb19ceb2e866e478188614a7f2b9ee, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -1245,7 +1245,7 @@ MonoBehaviour:
   jumpPower: 4.5
   jumpDelay: 1
   fallMultiplier: 1.2
-  midAirMovespeed: 250
+  midAirMovespeed: 150
   ascendSpeed: 15
   maxAscendSpeed: 12
   fallAscendFactor: 2
@@ -1286,9 +1286,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.66055274
-  m_Height: 3.631847
+  m_Height: 3.6709204
   m_Direction: 1
-  m_Center: {x: 0.010830213, y: 0.075843334, z: 3.4920257e-19}
+  m_Center: {x: 0.010830213, y: 0.05630652, z: 3.4920257e-19}
 --- !u!137 &137289110056810904
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
