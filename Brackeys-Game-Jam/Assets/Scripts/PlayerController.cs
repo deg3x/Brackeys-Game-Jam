@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     // Fluid move/jump pair is 6/5.5
@@ -39,9 +40,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 movement;
     private bool isJumping;
     private bool jumpEnabled;
+    private Animator anim;
 
     void Start ()
     {
+        anim = this.gameObject.GetComponent<Animator>();
         rb = this.gameObject.GetComponent<Rigidbody>();
         col = this.gameObject.GetComponent<CapsuleCollider>();
         distToGround = col.bounds.extents.y + 0.1f;    // Get the distance to check if object is touching the ground
@@ -131,6 +134,7 @@ public class PlayerController : MonoBehaviour
                     Vector3 jumpDir;
                     jumpDir = (movement == Vector3.zero) ? Vector3.zero : ((movement.x > 0) ? Vector3.right : Vector3.left);    // Looks ugly :)
                     rb.velocity = (jumpDir + Vector3.up) * jumpPower;
+                    anim.SetBool("isJumping", true);
                     isGrounded = false;
                     canJump = false;
                     Invoke("ResetCanJump", jumpDelay);  // Delay the next jump by jumpDelay seconds, so player cannot spam
@@ -152,6 +156,7 @@ public class PlayerController : MonoBehaviour
                     {
                         rb.velocity += new Vector3(0f, ascendSpeed * Time.fixedDeltaTime, 0f);
                     }
+                    anim.SetBool("isAscending", true);
                 }
                 else
                 {
@@ -170,7 +175,11 @@ public class PlayerController : MonoBehaviour
         Ray r1 = new Ray(pos + new Vector3(offset, 0, 0), Vector3.down);
         Ray r2 = new Ray(pos + new Vector3(-offset, 0, 0), Vector3.down);
 
-        isGrounded = (Physics.Raycast(r1, distToGround) || Physics.Raycast(r2, distToGround));  // Cast ray downwards to check if we are on the ground
+        if (!isGrounded && (isGrounded = (Physics.Raycast(r1, distToGround) || Physics.Raycast(r2, distToGround))) == true)  // Cast ray downwards to check if we are on the ground
+        {
+            anim.SetBool("isJumping", false);
+            anim.SetBool("isAscending", false);
+        }
         if (isGrounded == true)
         {
             rb.velocity = new Vector3(0f, rb.velocity.y, 0);  // Zero out the velocity. This solves some jumping bugs 
